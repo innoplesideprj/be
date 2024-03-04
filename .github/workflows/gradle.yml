@@ -30,24 +30,26 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         
-    - name: Write Properties
-      uses: christian-draeger/write-properties@1.1.0
-      with:
-    # The path to the properties file.
-        path: './src/main/resources/application-develop.properties'
-    # The property keys you want to write. Accepts an array.
-        property: |
-          'spring.datasource.driver-class-name'
-          'spring.datasource.url'
-          'spring.datasource.username'
-          'spring.datasource.password'
-
-    # The property values you want to write (same order as the keys). Accepts an array.
-        value: |
-          'com.mysql.cj.jdbc.Driver'
-          ${{ secrets.DATASOURCE_HOST }}
-          ${{ secrets.DATASOURCE_USERNAME }}
-          ${{ secrets.DATASOURCE_PASSWORD }}
+    - name: Make properties
+      if: contains(github.ref, 'main')
+      run: |
+        echo "ls -a . & pwd"
+        pwd
+        ls -a .
+        echo "mkdir & touch"
+        mkdir -p ./src/main/resources 
+        cd ./src/main/resources
+        touch ./application-develop.properties
+        pwd
+        ls -a .
+        echo "copy properties"
+        cat application-develop.properties
+      shell: bash
+      env:
+        spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+        spring.datasource.url: ${{ secrets.DATASOURCE_HOST }}
+        spring.datasource.username: ${{ secrets.DATASOURCE_USERNAME }}
+        spring.datasource.password: ${{ secrets.DATASOURCE_PASSWORD }}
 
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1

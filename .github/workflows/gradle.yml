@@ -39,7 +39,7 @@ jobs:
         spring.datasource.url: ${{ secrets.DATASOURCE_HOST }}
         spring.datasource.username: ${{ secrets.DATASOURCE_USERNAME }}
         spring.datasource.password: ${{ secrets.DATASOURCE_PASSWORD }}
-      run: ./gradlew build
+      run: ./gradlew --info test
 
     - name: 🐳 테스트 결과 Report
       uses: EnricoMi/publish-unit-test-result-action@v2

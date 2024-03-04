@@ -8,6 +8,9 @@ class MeetApplicationTests {
 
 	@Test
 	void contextLoads() {
+		if(1 == 1) {
+			throw new IllegalStateException();
+		}
 	}
 
 }

@@ -34,7 +34,7 @@ jobs:
       uses: christian-draeger/write-properties@1.1.0
       with:
     # The path to the properties file.
-        path: './src/main/resources/application.properties'
+        path: './src/main/resources/application-develop.properties'
     # The property keys you want to write. Accepts an array.
         property: |
           'spring.datasource.driver-class-name'

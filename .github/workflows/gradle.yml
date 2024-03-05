@@ -30,26 +30,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         
-    - name: Make properties
-      if: contains(github.ref, 'main')
+    # application.properties 파일 생성
+    - name: Make application-develop.properties
       run: |
-        echo "ls -a . & pwd"
-        pwd
-        ls -a .
-        echo "mkdir & touch"
-        mkdir -p ./src/main/resources 
         cd ./src/main/resources
         touch ./application-develop.properties
-        pwd
-        ls -a .
-        echo "copy properties"
-        cat application-develop.properties
+        
+        echo "${{ secrets.DATABASE_PROPERTIES }}" >> ./application.properties
       shell: bash
-      env:
-        spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
-        spring.datasource.url: ${{ secrets.DATASOURCE_HOST }}
-        spring.datasource.username: ${{ secrets.DATASOURCE_USERNAME }}
-        spring.datasource.password: ${{ secrets.DATASOURCE_PASSWORD }}
 
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
